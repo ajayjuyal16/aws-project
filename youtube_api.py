@@ -18,11 +18,9 @@ def fetch_youtube_comments_by_channel(channel_id, max_results=20):
     youtube = build("youtube", "v3", developerKey=API_KEY)
     comments = []
 
-    # Get uploads playlist ID
     channel_response = youtube.channels().list(part="contentDetails", id=channel_id).execute()
     uploads_playlist_id = channel_response["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
 
-    # Get videos from uploads playlist
     playlist_items = youtube.playlistItems().list(
         part="snippet",
         playlistId=uploads_playlist_id,
@@ -31,7 +29,7 @@ def fetch_youtube_comments_by_channel(channel_id, max_results=20):
 
     video_ids = [item["snippet"]["resourceId"]["videoId"] for item in playlist_items["items"]]
 
-    # Fetch comments from each video
+
     for vid in video_ids:
         if len(comments) >= max_results:
             break

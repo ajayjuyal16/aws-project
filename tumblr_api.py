@@ -2,7 +2,6 @@
 import requests
 from dotenv import load_dotenv
 
-# Load .env variables
 dotenv_path = r"C:\Users\maukd\OneDrive\Pictures\ajay-project\.env"
 load_dotenv(dotenv_path)
 
@@ -21,7 +20,6 @@ def fetch_tumblr_posts(tag="AI", limit=10):
         posts = data.get("response", [])
         texts = []
         for post in posts:
-            # Prefer summary, fallback to body or caption
             if "summary" in post:
                 texts.append(post["summary"])
             elif "body" in post:
@@ -55,9 +53,7 @@ def fetch_tumblr_posts_by_blog(blog_name, limit=10):
         return texts[:limit]
     except Exception as e:
         print(f"[ERROR] Tumblr blog fetch failed: {e}")
-        return []
-
-# Example usage for sentiment analysis:
+        return [
 if __name__ == "__main__":
     tag_posts = fetch_tumblr_posts(tag="AI", limit=10)
     print("Posts by tag 'AI':")

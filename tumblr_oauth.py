@@ -14,11 +14,9 @@ request_token_url = "https://www.tumblr.com/oauth/request_token"
 authorize_url = "https://www.tumblr.com/oauth/authorize"
 access_token_url = "https://www.tumblr.com/oauth/access_token"
 
-# Use 'oob' for PIN-based auth (out-of-band)
 oauth = OAuth1Session(consumer_key, client_secret=consumer_secret, callback_uri='http://localhost:8080/')
 
 
-# Step 1: Get request token
 fetch_response = oauth.fetch_request_token(request_token_url)
 resource_owner_key = fetch_response.get('oauth_token')
 resource_owner_secret = fetch_response.get('oauth_token_secret')
@@ -26,14 +24,11 @@ resource_owner_secret = fetch_response.get('oauth_token_secret')
 print(f"Request Token: {resource_owner_key}")
 print(f"Request Token Secret: {resource_owner_secret}")
 
-# Step 2: Get user authorization URL and open it in your browser
 authorization_url = oauth.authorization_url(authorize_url)
 print(f"Please go here and authorize: {authorization_url}")
 
-# Step 3: Get verifier (PIN) from user input
 verifier = input('Paste the PIN here after authorization: ')
 
-# Step 4: Get the access token using verifier
 oauth = OAuth1Session(
     consumer_key,
     client_secret=consumer_secret,

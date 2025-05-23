@@ -44,7 +44,7 @@ def analyze_platform(platform, username, query, limit):
             if username:
                 return fetch_reddit_comments_by_user(username, limit)
             elif query:
-                return fetch_reddit_comments_by_keyword(query, limit)  # ✅ FIXED
+                return fetch_reddit_comments_by_keyword(query, limit)  
         elif platform == "YouTube":
             if username:
                 return fetch_youtube_comments_by_channel(username, limit)

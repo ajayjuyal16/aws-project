@@ -1,0 +1,9 @@
+﻿streamlit
+praw
+google-api-python-client
+vaderSentiment
+requests
+python-dotenv
+matplotlib
+pandas
+requests_oauthlib

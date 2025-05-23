@@ -5,11 +5,9 @@ import time
 import os
 from dotenv import load_dotenv
 
-# Load environment variables
 dotenv_path = r"C:\Users\maukd\OneDrive\Pictures\ajay-project\.env"
 load_dotenv(dotenv_path)
 
-# Import platform-specific functions
 from reddit_api import fetch_reddit_comments_by_keyword, fetch_reddit_comments_by_user
 from youtube_api import fetch_youtube_comments, fetch_youtube_comments_by_channel
 from tumblr_api import fetch_tumblr_posts, fetch_tumblr_posts_by_blog
@@ -20,7 +18,6 @@ st.title("🧠 Live Sentiment Analysis Dashboard")
 
 platform = st.selectbox("Choose platform", ["Reddit", "YouTube", "Tumblr"])
 
-# Inputs
 if platform == "Reddit":
     username = st.text_input("Enter Reddit username (leave empty to search keyword):")
     if username:
@@ -41,7 +38,6 @@ limit = st.slider("How many items?", 5, 50, 20)
 refresh = st.checkbox("🔄 Auto-refresh every 60 seconds")
 last_updated = st.empty()
 
-# Platform analyzer
 def analyze_platform(platform, username, query, limit):
     try:
         if platform == "Reddit":
@@ -63,7 +59,6 @@ def analyze_platform(platform, username, query, limit):
         st.error(f"Error fetching data: {e}")
     return []
 
-# Main analysis function
 def run_analysis():
     st.info("Fetching live data...")
     comments = analyze_platform(platform, username, query, limit)
@@ -72,7 +67,6 @@ def run_analysis():
         st.warning("No comments/posts found. Try a different input.")
         return
 
-    # Sentiment analysis
     results = []
     for text in comments:
         label, score = analyze_sentiment(text)
@@ -81,7 +75,7 @@ def run_analysis():
     df = pd.DataFrame(results)
     st.dataframe(df)
 
-    # Pie chart
+
     st.subheader("📊 Sentiment Distribution")
     sentiment_counts = df["Sentiment"].value_counts()
     fig, ax = plt.subplots()
@@ -90,7 +84,6 @@ def run_analysis():
 
     last_updated.text(f"Last updated at {time.strftime('%H:%M:%S')}")
 
-# Run button + refresh
 if st.button("Analyze") or refresh:
     while True:
         run_analysis()
